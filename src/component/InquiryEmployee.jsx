@@ -6,30 +6,29 @@ const InquiryEmployee = () => {
   const [employees, setEmployees] = useState([]);
   const [locationFilter, setLocationFilter] = useState('');
   const [filteredEmployees, setFilteredEmployees] = useState([]);
+  const [locationData, setLocationData] = useState([]);
   const navigate = useNavigate();
 
-  // Fetch employees from API on component mount
+
   useEffect(() => {
     axios.get('http://localhost:8080/employee/allEmployee')
       .then(response => {
         setEmployees(response.data);
         setFilteredEmployees(response.data);
+        setLocationData(response.data);
       })
       .catch(error => {
         console.error('Error fetching employees:', error);
       });
   }, []);
 
-  // Filter employees based on location input
-  // useEffect(() => {
-  //   const filtered = employees.filter(emp =>
-  //     emp.location.toLowerCase().includes(locationFilter.toLowerCase())
-  //   );
-  //   setFilteredEmployees(filtered);
-  // }, [locationFilter, employees]);
 
   const homeHandlerClick = () => {
     navigate("/");
+  };
+
+  const selectLocationHandler = (e) => {
+    setFilteredEmployees(e.target.value);
   };
 
   const searchHandlerClick = async () => {
@@ -52,14 +51,18 @@ const InquiryEmployee = () => {
       <h2>Employee List</h2>
 
       <div >
-        <label htmlFor="location">Filter by Location: </label>
-        <input
-          type="text"
+        <label htmlFor="location">Location: </label>
+
+        <select
           id="location"
           value={locationFilter}
           onChange={(e) => setLocationFilter(e.target.value)}
-          placeholder="Enter location"
-        />
+        >
+          <option value="">Show All Employee</option>
+          {locationData.map(emp => (
+            <option value={emp.location}>{emp.location}</option>
+          ))}
+        </select>
         <button onClick={searchHandlerClick}>Search</button>
       </div>
 

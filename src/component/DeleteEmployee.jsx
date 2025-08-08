@@ -30,7 +30,7 @@ function EmployeeDelete() {
     }
   };
 
-    const homeHandlerClick = () => {
+  const homeHandlerClick = () => {
     navigate("/");
   };
 
@@ -52,12 +52,13 @@ function EmployeeDelete() {
           <b>ID:</b>{employee.employeeId}
           <b>, Name:</b>{employee.firstName} {employee.lastName}
           <b>, Location:</b>{employee.location}
-          <button onClick={handleDelete}>Delete</button>
+
         </div>
       )}
 
       {message && <p style={{ marginTop: '20px', color: 'red' }}>{message}</p>}
       <div>
+        <button onClick={handleDelete}>Delete</button>
         <button onClick={homeHandlerClick}>Home</button>
       </div>
     </div>
