@@ -59,8 +59,10 @@ const InquiryEmployee = () => {
           onChange={(e) => setLocationFilter(e.target.value)}
         >
           <option value="">Show All Employee</option>
-          {locationData.map(emp => (
-            <option value={emp.location}>{emp.location}</option>
+          {[...new Set(locationData.map(emp => emp.location))].map((loc, index) => (
+            <option key={index} value={loc}>
+              {loc}
+            </option>
           ))}
         </select>
         <button onClick={searchHandlerClick}>Search</button>
